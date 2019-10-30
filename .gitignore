@@ -11,3 +11,7 @@ src/*.o
 
 # generated files
 release/*
+
+# generated demo files
+demo/wasm/*
+demo/bundle.js

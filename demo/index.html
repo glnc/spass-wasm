@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang=en-us>
+
+<head>
+    <meta charset=utf-8>
+    <meta content="text/html; charset=utf-8" http-equiv=Content-Type>
+    <title>Demo for SPASS in the browser</title>
+    <script src="./bundle.js"></script>
+</head>
+
+<body>
+    <h1>Test SPASS in your Browser</h1>
+    <h2>Playground</h2>
+    <table>
+        <tr>
+            <td colspan="3">Command line arguments seperated by spaces: <input id="inpt_commandline" type="text" style="width:100%;"></td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td>input:</td>
+            <td></td>
+            <td>output:</td>
+        </tr>
+        <tr>
+            <td> <textarea cols="40" rows="20" id="inpt_input"></textarea></td>
+            <td> <button id="btn_play">==SPASS=></button></textarea></td>
+            <td> <textarea disabled cols="40" rows="20" id="inpt_output"></textarea></td>
+        </tr>
+    </table>
+    <br><br>
+    <h2>Memory/Performance Test</h2>
+    You can run SPASS constantly by clicking the button below.<br>
+    Use your browsers developer tools to monitor the memory usage and performance.<br>
+    SPASS ran <span id="spn_counter">0</span> times in this tab.<br>
+    <br>
+    <button id="btn_mem">RUN RUN RUN!</button>
+</body>
+
+</html>
