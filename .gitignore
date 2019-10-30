@@ -1,8 +1,13 @@
-src/*.o
+# generated source files
 src/iaparser.c
 src/iaparser.h
 src/iascanner.c
-src/SPASS
 src/tptpparser.c
 src/tptpparser.h
 src/tptpscanner.c
+
+# generated intermedeate files
+src/*.o
+
+# generated files
+release/*

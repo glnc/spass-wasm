@@ -132,8 +132,19 @@ DIMCONVMAIN     := dimacs2dfg.o
 PGENMAIN        := pgen.o
 RESCMPMAIN      := rescmp.o
 
+OUT_PATH 		:= ../release/
+EM_GENERATED_FILES := $(OUT_PATH)$(PROGRAM).js $(OUT_PATH)$(PROGRAM).wasm
+
+ifdef EMMAKEN_COMPILER
+	CC		:= emcc
+	CFLAGS +=  -s ALLOW_MEMORY_GROWTH=1 -s TOTAL_MEMORY=335151104 -s INVOKE_RUN=0 -s FORCE_FILESYSTEM=1 -s EXIT_RUNTIME=1 --pre-js ../src_js/prerun.js -s MODULARIZE=1 -s EXIT_RUNTIME=1 -s 'EXPORT_NAME="$(PROGRAM)"'
+	PROGRAM_SUFFIX := .js	
+else
+	PROGRAM_SUFFIX := 
+endif
+
 $(PROGRAM)	: $(BASE) $(PROGRAMBASE) $(PROGRAMMAIN)
-	$(PURIFYPROG) $(CC) $(CFLAGS) $(BASE) $(PROGRAMBASE) $(PROGRAMMAIN) -lm -o $(PROGRAM)
+	$(PURIFYPROG) $(CC) $(CFLAGS) $(BASE) $(PROGRAMBASE) $(PROGRAMMAIN) -lm -o $(OUT_PATH)$(PROGRAM)$(PROGRAM_SUFFIX)
 
 $(TRANSLATOR)	: $(PROGRAM)
 	$(RM) $(TRANSLATOR)
@@ -190,7 +201,7 @@ tags		:
 	etags *.[ch]
 
 clean		:
-	$(RM) $(BASE) $(PROGRAMBASE)  $(TRANSLATORBASE) $(TRANSLATORMAIN) $(PROGRAMMAIN) $(CONBASE) $(CONVERTERBASE) $(CONVERTERMAIN) $(CLCONBASE) $(CLCONVERTERBASE) $(CLCONVERTERMAIN) $(PROGRAM) $(TRANSLATOR) $(CONVERTER) $(CLCONVERTER)  $(PROCONBASE) $(PROCONVERTER) $(CONVOTTERMAIN) $(CONVOTTER) $(CONVDIMACSMAIN) $(CONVDIMACS) $(CONVTPTPMAIN) $(CONVTPTP) $(CONVASCIIMAIN) $(CONVASCII) $(CONVDFG) $(CONVDFGBASE) $(CONVDFGMAIN) $(INVCONV) $(INVCONVBASE) $(INVCONVMAIN) $(DIMCONV) $(DIMCONVBASE) $(DIMCONVMAIN) $(PGENBASE) $(PGENMAIN) $(RESCMPBASE) $(RESCMPMAIN) $(PGEN) $(RESCMP) iaparser.c iaparser.h iascanner.c proparser.c proparser.h proscanner.c tptpparser.c tptpparser.h tptpscanner.c
+	$(RM) $(BASE) $(PROGRAMBASE)  $(TRANSLATORBASE) $(TRANSLATORMAIN) $(PROGRAMMAIN) $(CONBASE) $(CONVERTERBASE) $(CONVERTERMAIN) $(CLCONBASE) $(CLCONVERTERBASE) $(CLCONVERTERMAIN) $(OUT_PATH)$(PROGRAM) $(TRANSLATOR) $(CONVERTER) $(CLCONVERTER)  $(PROCONBASE) $(PROCONVERTER) $(CONVOTTERMAIN) $(CONVOTTER) $(CONVDIMACSMAIN) $(CONVDIMACS) $(CONVTPTPMAIN) $(CONVTPTP) $(CONVASCIIMAIN) $(CONVASCII) $(CONVDFG) $(CONVDFGBASE) $(CONVDFGMAIN) $(INVCONV) $(INVCONVBASE) $(INVCONVMAIN) $(DIMCONV) $(DIMCONVBASE) $(DIMCONVMAIN) $(PGENBASE) $(PGENMAIN) $(RESCMPBASE) $(RESCMPMAIN) $(PGEN) $(RESCMP) $(EM_GENERATED_FILES) iaparser.c iaparser.h iascanner.c proparser.c proparser.h proscanner.c tptpparser.c tptpparser.h tptpscanner.c
 
 opt   :  tptpscanner.c tptpparser.c iascanner.c iaparser.c
 	gcc $(WARNINGS) -O3 -fwhole-program -flto array.c misc.c memory.c strings.c stack.c list.c clock.c vector.c hashmap.c symbol.c term.c context.c unify.c subst.c st.c clause.c sharing.c cmdline.c order.c kbo.c rpos.c subsumption.c condensing.c component.c defs.c ras.c eml.c description.c foldfg.c cnf.c resolution.c renaming.c rules-inf.c rules-split.c rules-ur.c terminator.c rules-red.c rules-sort.c analyze.c graph.c sort.c doc-proof.c search.c flags.c dfg_diagnostic.c dfg_string_table.c dfg_token.c dfgparser.c dfglexer.c tptpparser.c tptpscanner.c iaparser.c iascanner.c proofcheck.c tableau.c closure.c partition.c table.c top.c -lm -o $(PROGRAM)
