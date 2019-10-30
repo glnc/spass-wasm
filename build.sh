@@ -19,7 +19,7 @@ cd ..
 cp ./src_js/SPASSWrapper.js ./release/SPASSWrapper.js
 
 # if demo, build demo with browserify
-if [ -n "$1" -a $1 = "demo" ]
+if [ -n "$1" -a "$1" = "demo" ]
 then
     echo "build the demo"
     cp ./src_js/demo.js ./release/demo.js
