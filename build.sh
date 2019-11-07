@@ -1,30 +1,31 @@
 #!/bin/sh
 
-# create needed folders if they dont exist already
-mkdir -p release
+# create output folders
 mkdir -p demo/wasm
+mkdir -p release
 
-# clean demo
-rm ./demo/wasm/SPASS.wasm
+# clean demo web app
 rm ./demo/bundle.js
+rm ./demo/wasm/SPASS.wasm
 
-# clean
+# clean release build
 rm ./release/SPASSWrapper.js
+
 cd ./src
 make clean
 
-# rebuild
+# build
 emmake make
+
 cd ..
 cp ./src_js/SPASSWrapper.js ./release/SPASSWrapper.js
 
-# if demo, build demo with browserify
+# optionally build demo web app
 if [ -n "$1" -a "$1" = "demo" ]
 then
-    echo "build the demo"
-    cp ./src_js/demo.js ./release/demo.js
-    # browserify
-    browserify ./release/demo.js -o ./demo/bundle.js
-    cp ./release/SPASS.wasm  ./demo/wasm/SPASS.wasm
-    rm ./release/demo.js
+	echo "Building demo web app"
+	cp ./src_js/demo.js ./release/demo.js
+	browserify ./release/demo.js -o ./demo/bundle.js
+	cp ./release/SPASS.wasm ./demo/wasm/SPASS.wasm
+	rm ./release/demo.js
 fi
