@@ -14,4 +14,4 @@ release/*
 
 # generated demo web app files
 demo/bundle.js
-demo/wasm/*
+demo/wasm/SPASS.wasm
