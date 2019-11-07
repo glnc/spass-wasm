@@ -1,4 +1,4 @@
-# generated source files
+# generated SPASS source files
 src/iaparser.c
 src/iaparser.h
 src/iascanner.c
@@ -6,12 +6,12 @@ src/tptpparser.c
 src/tptpparser.h
 src/tptpscanner.c
 
-# generated intermedeate files
+# intermediate SPASS files
 src/*.o
 
-# generated files
+# release build
 release/*
 
-# generated demo files
-demo/wasm/*
+# generated demo web app files
 demo/bundle.js
+demo/wasm/*
