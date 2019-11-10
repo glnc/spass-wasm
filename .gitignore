@@ -9,9 +9,9 @@ src/tptpscanner.c
 # intermediate SPASS files
 src/*.o
 
-# release build
-release/*
-
 # generated demo web app files
 demo/bundle.js
 demo/SPASS.wasm
+
+# release build
+release/*
