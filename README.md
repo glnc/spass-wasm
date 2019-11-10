@@ -21,7 +21,7 @@ Follow the instructions on https://kripken.github.io/emscripten-site/docs/gettin
 ## Building
 Run `build.sh` to compile SPASS using emscripten as well as to build the JavaScript modules (see *Usage*).
 
-Run `build.sh demo` to additionally build and run a demo web app listening on http://localhost:8080. 
+Run `build.sh demo` to additionally build and run a demo web app listening on http://localhost:8080.
 
 ## Usage
 emscripten generates the CommonJS module `release/SPASS.js`. Additionally there is a wrapper module `release/Wrapper.js` that is recommended to use, since it does some optimization regarding memory consumption.
