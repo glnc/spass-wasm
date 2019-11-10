@@ -15,7 +15,7 @@ document.getElementById("run").addEventListener("click", () => {
 	SPASS.run(input, args).then(output => {
 		document.getElementById("output").value = output;
 	}).catch(reason => {
-		document.getElementById("output").value = `Execution failed: \n\n${reason}`;
+		document.getElementById("output").value = `Execution failed:\n\n${reason}`;
 	}).finally(() => {
 		document.getElementById("run").disabled = false;
 	});
