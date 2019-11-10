@@ -13,8 +13,8 @@ document.getElementById("run").addEventListener("click", () => {
 		args = [];
 	}
 
-	SPASS.run(input, args).then(output => {
-		document.getElementById("output").value = output;
+	SPASS.run(input, args).then(result => {
+		document.getElementById("output").value = result;
 	}).catch(reason => {
 		document.getElementById("output").value = `Execution failed:\n\n${reason}`;
 	}).finally(() => {
