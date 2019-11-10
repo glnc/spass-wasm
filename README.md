@@ -24,12 +24,13 @@ Run `build.sh` to compile SPASS using emscripten as well as to build the JavaScr
 Run `build.sh demo` to additionally build and run a demo web app listening on http://localhost:8080. 
 
 ## Usage
-emscripten generates the CommonJS module `release/SPASS.js`. Additionally there is a wrapper module `release/SPASSWrapper.js` that is recommended to use, since it does some optimization regarding memory consumption.
+emscripten generates the CommonJS module `release/SPASS.js`. Additionally there is a wrapper module `release/Wrapper.js` that is recommended to use, since it does some optimization regarding memory consumption.
 
 ```js
-const SPASS = require("./SPASSWrapper.js");
+const SPASS = require("./Wrapper.js");
 
-SPASS.setWASMPATH("SPASS.wasm");
+SPASS.setModule(require("./SPASS.js"));
+SPASS.setWASM("./SPASS.wasm");
 
 SPASS.run("begin_problem(Sokrates1). [...] end_problem.", ["-DocProof"]).then(result => {
 	console.log(result);

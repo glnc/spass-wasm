@@ -8,7 +8,7 @@ rm ./demo/SPASS.wasm
 
 # clean release build
 mkdir -p release
-rm ./release/SPASSWrapper.js
+rm ./release/Wrapper.js
 
 cd ./src
 make clean
@@ -18,7 +18,7 @@ echo "\n### Building release build..."
 emmake make
 
 cd ..
-cp ./src_js/SPASSWrapper.js ./release/SPASSWrapper.js
+cp ./src_js/Wrapper.js ./release/Wrapper.js
 
 # optionally build and run demo web app
 if [ -n "$1" -a "$1" = "demo" ]

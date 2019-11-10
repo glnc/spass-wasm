@@ -1,6 +1,7 @@
-const SPASS = require("../release/SPASSWrapper.js");
+const SPASS = require("../release/Wrapper.js");
 
-SPASS.setWASMPATH("./SPASS.wasm");
+SPASS.setModule(require("../release/SPASS.js"));
+SPASS.setWASM("./SPASS.wasm");
 
 document.getElementById("run").addEventListener("click", () => {
 	document.getElementById("run").disabled = true;
