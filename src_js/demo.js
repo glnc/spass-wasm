@@ -1,6 +1,6 @@
-const SPASSWrapper = require("../release/SPASSWrapper.js");
+const SPASS = require("../release/SPASSWrapper.js");
 
-SPASSWrapper.setWasmPath("./SPASS.wasm");
+SPASS.setWASMPATH("./SPASS.wasm");
 
 document.getElementById("run").addEventListener("click", () => {
 	document.getElementById("run").disabled = true;
@@ -12,7 +12,7 @@ document.getElementById("run").addEventListener("click", () => {
 		args = [];
 	}
 
-	SPASSWrapper.run(input, args).then(output => {
+	SPASS.run(input, args).then(output => {
 		document.getElementById("output").value = output;
 	}).catch(reason => {
 		document.getElementById("output").value = `Execution failed: \n\n${reason}`;

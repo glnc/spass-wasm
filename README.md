@@ -19,35 +19,23 @@ Follow the instructions on https://kripken.github.io/emscripten-site/docs/gettin
 * [http-server](https://www.npmjs.com/package/http-server)
 
 ## Building
-Run `build.sh` to build SPASS using emscripten as well as a JavaScript wrapper.
+Run `build.sh` to compile SPASS using emscripten as well as to build the JavaScript modules (see *Usage*).
 
 Run `build.sh demo` to additionally build and run a demo web app listening on http://localhost:8080. 
 
 ## Usage
-SPASS is build to the CommonJS module 'SPASS'. To invoke SPASS it's recommended to use the 'SPASSWrapper' module, since it does some optimization regarding the memory consumption.
+emscripten generates the CommonJS module `release/SPASS.js`. Additionally there is a wrapper module `release/SPASSWrapper.js` that is recommended to use, since it does some optimization regarding memory consumption.
 
 ```js
-SPASSWrapper = require("./SPASSWrapper.js");
+const SPASS = require("./SPASSWrapper.js");
 
-// Tell the wrapper where to find the binary. If you do not tell the wrapper where to look, it will try and load "SPASS.wasm" by default.
-SPASSWrapper.setWasmPath("SPASS.wasm");
+SPASS.setWASMPATH("SPASS.wasm");
 
-// Initialize the wrapper. This will load the binary, compile it and create the needed Memory.
-SPASSWrapper.init();
-
-// let data = ...
-
-// Run SPASS and print the output to the console.
-// "data" should be a string with the contents of a file you would run SPASS normaly on.
-SPASSWrapper.run(data).then(result=>{
-   console.log(result);
+SPASS.run("begin_problem(Sokrates1). [...] end_problem.", ["-DocProof"]).then(result => {
+	console.log(result);
+}).catch(reason => {
+	console.error(reason);
 });
-
-// If SPASS should be invoked with additional parameters, you can pass them too.
-SPASSWrapper.run(data, ["-Flotter"]).then(result=>{
-   console.log(result);
-});
-
 ```
 
 ## Original License
