@@ -1,6 +1,7 @@
 #!/bin/sh
 
 # create output folders
+echo "### Cleaning..."
 mkdir -p demo/wasm
 mkdir -p release
 
@@ -15,17 +16,19 @@ cd ./src
 make clean
 
 # build
+echo "\n### Building release build..."
 emmake make
 
 cd ..
 cp ./src_js/SPASSWrapper.js ./release/SPASSWrapper.js
 
-# optionally build demo web app
+# optionally build and run demo web app
 if [ -n "$1" -a "$1" = "demo" ]
 then
-	echo "Building demo web app"
-	cp ./src_js/demo.js ./release/demo.js
-	browserify ./release/demo.js -o ./demo/bundle.js
+	echo "\n### Building demo web app..."
 	cp ./release/SPASS.wasm ./demo/wasm/SPASS.wasm
-	rm ./release/demo.js
+	browserify ./src_js/demo.js -o ./demo/bundle.js
+
+	echo "\n### Running demo web app..."
+	http-server ./demo
 fi
