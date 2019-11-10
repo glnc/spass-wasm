@@ -3,21 +3,25 @@ Compile SPASS to WebAssembly using emscripten.
 
 This is a fork of [Classic SPASS: An Automated Theorem Prover for First-Order Logic with Equality](https://www.mpi-inf.mpg.de/departments/automation-of-logic/software/spass-workbench/classic-spass-theorem-prover/) v3.9 by Max Planck Institute for Informatics.
 
-Tested on Ubuntu 18.04 LTS (native and within Windows Subsystem for Linux).
+Tested on Ubuntu 16.04 LTS.
 
 ## Prerequisites
+### emscripten
+Follow the instructions on https://kripken.github.io/emscripten-site/docs/getting_started/downloads.html in order to install emscripten and all of its dependencies.
+
+### For SPASS
 * bison
-* emscripten
 * flex
 * make
-* browserify (only if you want to build the demo web app)
 
-Follow the instructions on https://kripken.github.io/emscripten-site/docs/getting_started/downloads.html in order to install emscripten and all of its dependencies.
+### For Demo Web App
+* [browserify](https://www.npmjs.com/package/browserify)
+* [http-server](https://www.npmjs.com/package/http-server)
 
 ## Building
 Run `build.sh` to build SPASS using emscripten as well as a JavaScript wrapper.
 
-Run `build.sh demo` to additionally build a demo web app. You should then serve the contents of /demo using a webserver and open the page with your browser. 
+Run `build.sh demo` to additionally build and run a demo web app listening on http://localhost:8080. 
 
 ## Usage
 SPASS is build to the CommonJS module 'SPASS'. To invoke SPASS it's recommended to use the 'SPASSWrapper' module, since it does some optimization regarding the memory consumption.

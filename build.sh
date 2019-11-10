@@ -1,15 +1,13 @@
 #!/bin/sh
 
-# create output folders
 echo "### Cleaning..."
-mkdir -p demo/wasm
-mkdir -p release
 
 # clean demo web app
 rm ./demo/bundle.js
-rm ./demo/wasm/SPASS.wasm
+rm ./demo/SPASS.wasm
 
 # clean release build
+mkdir -p release
 rm ./release/SPASSWrapper.js
 
 cd ./src
@@ -26,7 +24,7 @@ cp ./src_js/SPASSWrapper.js ./release/SPASSWrapper.js
 if [ -n "$1" -a "$1" = "demo" ]
 then
 	echo "\n### Building demo web app..."
-	cp ./release/SPASS.wasm ./demo/wasm/SPASS.wasm
+	cp ./release/SPASS.wasm ./demo/SPASS.wasm
 	browserify ./src_js/demo.js -o ./demo/bundle.js
 
 	echo "\n### Running demo web app..."
