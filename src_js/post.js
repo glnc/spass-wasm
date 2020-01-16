@@ -2,7 +2,6 @@
 // We store handles for the callback so we can cancle the timeouts on runtime exit
 var timeoutHandles = [];
 function _alarm(seconds) {
-    console.log("new alarm called");
     var handle = setTimeout(function () {
         if (__sigalrm_handler) dynCall_vi(__sigalrm_handler, 0);
     }, seconds * 1000);
@@ -15,6 +14,5 @@ function clearAlarms(){
     }
 }
 
-// Module.preRun is an array of functions called before the module is initalized.
 Module.postRun = Module.postRun || [];
 Module.postRun.push(clearAlarms);
