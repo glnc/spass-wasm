@@ -13,7 +13,7 @@
 #* *  This program is distributed in the hope that it will  * *
 #* *  be useful, but WITHOUT ANY WARRANTY; without even     * *
 #* *  the implied warranty of MERCHANTABILITY or FITNESS    * *
-#* *  FOR A PARTICULAR PURPOSE.  See the LICENCE file       * * 
+#* *  FOR A PARTICULAR PURPOSE.  See the LICENCE file       * *
 #* *  for more details.                                     * *
 #* *                                                        * *
 #* *                                                        * *
@@ -34,19 +34,19 @@
 #**************************************************************
 
 
-# $RCSfile: makefile,v $ 
+# $RCSfile: makefile,v $
 
 SHELL = /bin/sh
 
 # Set the Compiler flags
 
 ifdef SPASSDEBUG
-    CFLAGS := -g -fno-inline -Wno-unused # -DHM_DEBUGPRINT=1 #(to activate gcov) -fprofile-arcs -ftest-coverage 
+    CFLAGS := -g -fno-inline -Wno-unused # -DHM_DEBUGPRINT=1 #(to activate gcov) -fprofile-arcs -ftest-coverage
 else
    ifdef SPASSANALYZE
       CFLAGS := -O2 -pg -Wno-unused
    else
-      CFLAGS := -O2 -Winline #-fprofile-use # -fprofile-generate # # 
+      CFLAGS := -O2 -Winline #-fprofile-use # -fprofile-generate # #
    endif
 endif
 
@@ -58,12 +58,12 @@ ifdef WIN
     CFLAGS += -DWIN=1
 endif
 
-ifdef NO_MEMORY_MANAGEMENT    
+ifdef NO_MEMORY_MANAGEMENT
     CFLAGS += -DNO_MEMORY_MANAGEMENT=1
 endif
 
 ifdef PURIFY
-    ifndef NO_MEMORY_MANAGEMENT  
+    ifndef NO_MEMORY_MANAGEMENT
       CFLAGS += -DNO_MEMORY_MANAGEMENT=1
     endif
     PURIFYPROG := purify
@@ -78,14 +78,14 @@ endif
 # Enables catching of some common signals (segmentation fault ...)
 
 
-WARNINGS = -pedantic -Wall -Wshadow -Wpointer-arith -Wwrite-strings -std=c99 #-Wconversion  
+WARNINGS = -pedantic -Wall -Wshadow -Wpointer-arith -Wwrite-strings -std=c99 #-Wconversion
 # Turn off some warnings for scanner files
 SCANNERFLAGS=-Wno-implicit -Wno-uninitialized
 
 # Currently purify does not work with gcc 2.8.*
 
 ifndef PURIFY
-   CC		:= gcc 
+   CC		:= gcc
 else
    CC		:= gcc-2.7.2.3
 endif
@@ -137,10 +137,10 @@ EM_GENERATED_FILES := $(OUT_PATH)$(PROGRAM).js $(OUT_PATH)$(PROGRAM).wasm
 
 ifdef EMMAKEN_COMPILER
 	CC		:= emcc
-	CFLAGS +=  -s ALLOW_MEMORY_GROWTH=1 -s TOTAL_MEMORY=335151104 -s INVOKE_RUN=0 -s FORCE_FILESYSTEM=1 -s EXIT_RUNTIME=1 --pre-js ../src_js/prerun.js --post-js ../src_js/post.js -s MODULARIZE=1 -s 'EXPORT_NAME="$(PROGRAM)"'
-	PROGRAM_SUFFIX := .js	
+	CFLAGS +=  -s ALLOW_MEMORY_GROWTH=1 -s TOTAL_MEMORY=335151104 -s INVOKE_RUN=0 -s FORCE_FILESYSTEM=1 -s EXIT_RUNTIME=1 --pre-js ../src_js/prerun.js --post-js ../src_js/postrun.js -s MODULARIZE=1 -s 'EXPORT_NAME="$(PROGRAM)"'
+	PROGRAM_SUFFIX := .js
 else
-	PROGRAM_SUFFIX := 
+	PROGRAM_SUFFIX :=
 endif
 
 $(PROGRAM)	: $(BASE) $(PROGRAMBASE) $(PROGRAMMAIN)
@@ -180,7 +180,7 @@ $(INVCONV)	: $(INVCONVBASE) $(INVCONVMAIN)
 $(DIMCONV)	: $(DIMCONVBASE) $(DIMCONVMAIN) $(BASE)
 	$(PURIFYPROG) $(CC) $(CFLAGS) $(BASE) $(DIMCONVBASE) $(DIMCONVMAIN) -lm -o $(DIMCONV)
 
-$(PGEN)		: $(PGENBASE) $(PGENMAIN) 
+$(PGEN)		: $(PGENBASE) $(PGENMAIN)
 	$(PURIFYPROG) $(CC) $(CFLAGS) $(PGENBASE) $(PGENMAIN) -lm -o $(PGEN)
 
 $(RESCMP)	: $(RESCMPBASE) $(RESCMPMAIN)
@@ -188,14 +188,14 @@ $(RESCMP)	: $(RESCMPBASE) $(RESCMPMAIN)
 
 scripts		: SPASS checkstat dfg2otter.pl pcs deprose filestat tpform tpget $(PROGRAM) $(CONVOTTER) $(CONVDIMACS) $(PGEN) $(RESCMP)
 
-.PHONY		: all depend clean archive scripts tags 
+.PHONY		: all depend clean archive scripts tags
 
 all		: $(PROGRAM) $(TRANSLATOR) $(CONVERTER) $(CLCONVERTER) $(PROCONVERTER) $(CONVOTTER) $(CONVDIMACS) $(CONVTPTP) $(CONVASCII) $(INVCONV) $(DIMCONV) $(PGEN) $(RESCMP) $(CONVDFG) scripts
 
 depend		: iaparser.c iascanner.c proparser.c proscanner.c tptpparser.c tptpscanner.c
 # Only works for gcc !!
 	$(RM)  .depend
-	$(CC) $(CFLAGS) -MM *.c > .depend 
+	$(CC) $(CFLAGS) -MM *.c > .depend
 
 tags		:
 	etags *.[ch]
@@ -205,7 +205,7 @@ clean		:
 
 opt   :  tptpscanner.c tptpparser.c iascanner.c iaparser.c
 	gcc $(WARNINGS) -O3 -fwhole-program -flto array.c misc.c memory.c strings.c stack.c list.c clock.c vector.c hashmap.c symbol.c term.c context.c unify.c subst.c st.c clause.c sharing.c cmdline.c order.c kbo.c rpos.c subsumption.c condensing.c component.c defs.c ras.c eml.c description.c foldfg.c cnf.c resolution.c renaming.c rules-inf.c rules-split.c rules-ur.c terminator.c rules-red.c rules-sort.c analyze.c graph.c sort.c doc-proof.c search.c flags.c dfg_diagnostic.c dfg_string_table.c dfg_token.c dfgparser.c dfglexer.c tptpparser.c tptpscanner.c iaparser.c iascanner.c proofcheck.c tableau.c closure.c partition.c table.c top.c -lm -o $(PROGRAM)
-     
+
 
 archive		: clean iascanner.l iaparser.y proscanner.l proparser.y tptpscanner.l tptpparser.y
 	$(RM) spass.tgz
@@ -229,13 +229,13 @@ winarchive		: clean  dfgscanner.c dfgparser.c  tptpscanner.c tptpparser.c  iasca
 	cp winlib/*.h winsource
 	cp winlib/*.bat winsource
 	cp winlib/*.mak winsource
-	perl -pi -e 's/\#include \<inttypes\.h\>//;' winsource/clock.h  
-	perl -pi -e 's/\#include \<sys\/time\.h\>//;' winsource/clock.h  
-	perl -pi -e 's/\#include \<unistd\.h\>//;' winsource/*.h 
+	perl -pi -e 's/\#include \<inttypes\.h\>//;' winsource/clock.h
+	perl -pi -e 's/\#include \<sys\/time\.h\>//;' winsource/clock.h
+	perl -pi -e 's/\#include \<unistd\.h\>//;' winsource/*.h
 	perl -pi -e 's/(\%\d*)z/$${1}l/g;' winsource/*.c
 	perl -pi -e 's/\#ifndef YY_NO_UNISTD_H/\#define YY_NO_UNISTD_H\n\#ifndef YY_NO_UNISTD_H/;' winsource/*scanner.c
-	perl -pi -e 's/\|\| \(Signal == SIGALRM \&\& top_NoAlarm == 0\)//;' winsource/top.c 
-	perl -pi -e 's/signal\(SIGALRM, top_SigHandler\)\;//;' winsource/top.c 	
+	perl -pi -e 's/\|\| \(Signal == SIGALRM \&\& top_NoAlarm == 0\)//;' winsource/top.c
+	perl -pi -e 's/signal\(SIGALRM, top_SigHandler\)\;//;' winsource/top.c
 	perl -pi -e 's/alarm\(/alarm\_SetAlarm\(/;' winsource/top.c
 	perl -pi -e 's/\#include \<signal.h\>/\#include \<signal.h\>\n\#include \"alarm.h\"/;' winsource/top.c
 
